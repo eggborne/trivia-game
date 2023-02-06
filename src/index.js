@@ -24,10 +24,12 @@ function getCategories() {
     let response = JSON.parse(this.responseText);
     categories = response.trivia_categories;
     for (const obj of categories) {
+      obj.name = obj.name.split(': ').reverse()[0];
       document.getElementById('subject-select').innerHTML += `
         <option name=${obj.id}>${obj.name}</option>
       `;
     }
+    console.log('cat', categories)
   });
   catRequest.open("GET", url, true);
   catRequest.send();
@@ -44,7 +46,6 @@ function getIDForCategory(categoryName) {
 }
 
 async function createTriviaCards() {
-  // document.getElementById('card-area').innerHTML = `<form id="answers-form">`;
   let answersForm = document.createElement('form');
   answersForm.id = 'answers-form';
   for (const questionObj of questionList) {
@@ -54,11 +55,11 @@ async function createTriviaCards() {
     if (questionObj.type === 'boolean') {
       choicesHTML = `
         <div>
-          <input type="radio" id="true-${questionList.indexOf(questionObj)}" name="boolean" value="true">
+          <input type="radio" id="true-${questionList.indexOf(questionObj)}" name="boolean-${questionList.indexOf(questionObj)}" value="true" checked>
           <label for="true-${questionList.indexOf(questionObj)}">True</label>
         </div>
         <div>
-          <input type="radio" id="false-${questionList.indexOf(questionObj)}" name="boolean" value="false">
+          <input type="radio" id="false-${questionList.indexOf(questionObj)}" name="boolean-${questionList.indexOf(questionObj)}" value="false">
           <label for="false-${questionList.indexOf(questionObj)}">False</label>
         </div>
       `;
@@ -70,10 +71,12 @@ async function createTriviaCards() {
       let choiceArray = [...questionObj.incorrect_answers];
       choiceArray.splice(correctIndex, 0, questionObj.correct_answer);
       for (const choice of choiceArray) {
+        let choiceIndex = choiceArray.indexOf(choice);
+        let choiceID = `question-${questionList.indexOf(questionObj)}-choice-${choiceIndex}`;
         choicesHTML += `
           <div>
-            <input type="radio" id="${choice}" name="${questionObj.question}" value="choice">
-            <label for="${choice}">${choice}</label>
+            <input type="radio" id="${choiceID}" name="multiple-${questionList.indexOf(questionObj)}" value="${choice}" ${choiceIndex === 0 ? 'checked' : ''}>
+            <label for="${choiceID}">${choice}</label>
           </div>
         `;
       }
@@ -86,8 +89,9 @@ async function createTriviaCards() {
 
     document.getElementById('card-area').append(answersForm);
     answersForm.append(cardObj);
-    await pause(100);
+    await pause(2);
     cardObj.classList.add('showing');
+    await pause(200);
   }
 }
 
@@ -98,9 +102,13 @@ async function handleStartGameClick(e) {
   questionList = [];
   let request = new XMLHttpRequest();
   let questionCount = document.getElementById('question-count').value;
-  let subjectID = getIDForCategory(document.getElementById('subject-select').value);
+  let userCategory = document.getElementById('subject-select').value;
+  if (userCategory === 'Random') {
+    userCategory = categories[randomInt(0, categories.length - 1)].name;
+  }
+  let subjectID = getIDForCategory(userCategory);
   let difficulty = document.getElementById('difficulty-select').value.toLowerCase();
-  const url = `https://opentdb.com/api.php?amount=${questionCount}&category=${subjectID}&difficulty=${difficulty}`;
+  const url = `https://opentdb.com/api.php?amount=${questionCount}&category=${subjectID}&difficulty=${difficulty}&token=${sessionKey}`;
   request.addEventListener("loadend", async function () {
     let response = JSON.parse(this.responseText);
     if (response.results.length) {
@@ -126,9 +134,20 @@ function createCheckAnswersButton() {
 
 function handleCheckAnswersClick(e) {
   e.preventDefault();
-  for (const el of document.getElementsByClassName('trivia-card')) {
-    console.log('checking el', el)
+  let cardElements = document.getElementsByClassName('trivia-card');
+  let totalQuestions = cardElements.length;
+  let correctAnswers = 0;
+  for (let i = 0; i < totalQuestions; i++) {
+    let correctAnswer = questionList[i].correct_answer;
+    let userAnswer = [...cardElements[i].getElementsByTagName('input')].filter(inp => inp.checked)[0].value;
+    if (userAnswer === correctAnswer) {
+      cardElements[i].style.backgroundColor = 'green';
+      correctAnswers++;
+    } else {
+      cardElements[i].style.backgroundColor = 'red';
+    }
   }
+  document.querySelector('.button-end button').innerText = `${correctAnswers}/${totalQuestions} correct`;
 }
 
 const randomInt = (min, max) => Math.round(Math.random() * (max - min) + min);

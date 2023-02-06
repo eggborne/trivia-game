@@ -77,7 +77,7 @@ form > button {
   color: #222;
   padding: 1rem;
   opacity: 0;
-  transition: opacity 500ms ease;
+  transition: opacity 500ms ease, background-color 500ms ease;
 }
 
 .trivia-card.showing {
