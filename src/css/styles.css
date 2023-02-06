@@ -14,6 +14,14 @@ body {
   color: #ddd;
 }
 
+label {
+  cursor: pointer;
+}
+input, button, select {
+  padding: 1rem;
+  cursor: pointer;
+}
+
 header {
   height: var(--header-height);
   background-color: black;
@@ -22,64 +30,89 @@ header {
   justify-content: center;
 }
 
-select, input {
-  background-color: inherit;
-  font-size: inherit;
-  padding: 0 1rem;
-}
-
-button, input, select  {
-  align-self: stretch;
-
-}
-
 main {
   padding: 3rem;
 }
 
-#location-form {
+#trivia-form {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: var(--header-height);
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 0.5rem;
+  margin-bottom: 2rem
 }
 
-#output-area {
-  position: relative;
+#trivia-form.working::after {
+  content: 'LOADING...';
+  position: absolute;
+  font-size: 2rem;
+  color: inherit;
+  left: 50%;
+  translate: -50%;
+  top: calc(var(--header-height) * 4);
+  animation: stretch infinite alternate 500ms;
+}
+
+form > button {
+  width: 6rem;
+}
+
+#card-area {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #00000066;
-  padding: 2rem;
+  align-items: stretch;
   gap: 1rem;
-  min-height: 14rem;
-  border-radius: 2rem;
 }
 
-#loading-message {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--header-height) * 5);
-  transform: translate(-50%, -50%);
-  transform-origin: 0;
-  color: #444;
-  font-weight: bold;
-  display: none;
-  animation: bob 500ms infinite alternate;
-}
-
-#loading-message.showing {
+#answers-form {
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
 }
 
-@keyframes bob {
+.trivia-card {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(108, 108, 108);
+  color: #222;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.trivia-card.showing {
+  opacity: 1;
+}
+
+.button-end {
+  border-radius: 3rem;
+  margin: 2rem;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(108, 108, 108);
+  color: #222;
+  padding: 1rem;
+}
+.button-end > button {
+  font-size: 1.5rem;
+}
+
+.trivia-card h4 {
+  opacity: 0.5;
+  margin: 0.5rem;
+}
+
+.question {
+  font-size: 1.2rem;
+  margin: 0.5rem;
+}
+
+@keyframes stretch {
   from {
-    scale: 1
+    scale: 0.5 1;
   }
   to {
-    scale: 2
+    scale: 1 0.5;
   }
 }

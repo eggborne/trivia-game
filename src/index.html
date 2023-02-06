@@ -4,26 +4,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>OpenWeather API Demo</title>
+  <title>Trivia Game</title>
 </head>
 <body>
-  <header><h1>OpenWeather API Demo</h1></header>
+  <header><h1>Trivia Game</h1></header>
   <main>
-    <form id="location-form">
-      <label for="city-name-input">City:</label>
-      <input id="city-name-input" name="city-name-input">
-      <label for="temp-units-input">Units</label>
-      <label for="state-name-input">State:</label>
-      <select id="state-name-input" name="state-name-input"></select>
-      <select id="temp-units-input" name="temp-units-input">
-        <option name="Celsius">Celsius</option>
-        <option name="Fahrenheit">Fahrenheit</option>
-        <option name="Kelvin">Kelvin</option>
+    <form id="trivia-form">
+      <label for="question-count">Number of questions</label>
+      <input value="10" id="question-count" name="question-count" type="number" min="1" max="25">
+      <label for="difficulty-select">Difficulty</label>
+      <select id="difficulty-select" name="difficulty-select">
+        <option name="easy">Easy</option>
+        <option selected name="medium">Medium</option>
+        <option name="hard">Hard</option>
       </select>
-      <button type="submit">Get weather</button>
+      <label for="subject-select">Subject</label>
+      <select id="subject-select" name="subject-select"></select>
+      <button type="submit">Go!</button>
     </form>
-    <div id="loading-message">LOADING</div>
-    <div id="output-area"></div>
+    <div id="card-area"></div>
   </main>
 </body>
 </html>
