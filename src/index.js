@@ -18,6 +18,7 @@ function getWeather(city, state, units) {
   geoRequest.addEventListener("loadend", function () {
     let response = JSON.parse(this.responseText);
     if (this.status === 200) {
+      console.log('georeq got', response)
       let targetCity = response.filter(obj => obj.state === state)[0];
       let lat = targetCity.lat;
       let lon = targetCity.lon;
@@ -31,13 +32,23 @@ function getWeather(city, state, units) {
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unitType}`;
       request.addEventListener("loadend", function () {
         let response = JSON.parse(this.responseText);
+        document.getElementById('loading-message').classList.remove('showing');
         if (this.status === 200) {
           printWeatherInfo(city, state, units, response);
+        } else {
+          document.getElementById('output-area').innerHTML = `
+            <div style="color: red">ERROR ${this.status}: ${this.statusText}</div>
+          `;
         }
       });
 
       request.open("GET", url, true);
       request.send();
+    } else {
+      document.getElementById('loading-message').classList.remove('showing');
+      document.getElementById('output-area').innerHTML = `
+        <div style="color: red">ERROR ${this.status}: ${this.statusText}</div>
+      `;
     }
   });
 
@@ -46,7 +57,7 @@ function getWeather(city, state, units) {
 }
 
 function printWeatherInfo(city, state, units, data) {
-  document.getElementById('output-area').innerHTML = `
+  document.getElementById('output-area').innerHTML += `
     <h2>${city[0].toUpperCase() + city.substring(1, city.length)}, ${state}</h2>
     <div>${data.weather[0].main}</div>
     <div>Temp: ${data.main.temp}° ${units}</div>
@@ -56,6 +67,7 @@ function printWeatherInfo(city, state, units, data) {
 
 document.getElementById('location-form').addEventListener('submit', (e) => {
   e.preventDefault();
+  document.getElementById('loading-message').classList.add('showing');
   let userCity = document.getElementById('city-name-input').value;
   let userState = states[document.getElementById('state-name-input').value];
   let userUnits = document.getElementById('temp-units-input').value;

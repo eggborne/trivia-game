@@ -47,10 +47,37 @@ main {
 }
 
 #output-area {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: #00000066;
   padding: 2rem;
   gap: 1rem;
+  min-height: 12rem;
+}
+
+#loading-message {
+  left: 50%;
+  top: 50%;
+  /* transform: translate(-50%, -50%); */
+  transform-origin: center;
+  color: #444;
+  font-weight: bold;
+  display: none;
+  animation: bob 500ms infinite alternate;
+}
+
+#loading-message.showing {
+  display: flex;
+}
+
+@keyframes bob {
+  from {
+    scale: 1
+  }
+  to {
+    scale: 2
+  }
 }
