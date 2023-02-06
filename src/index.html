@@ -4,8 +4,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Galactic Age Calculator</title>
+  <title>OpenWeather API Demo</title>
 </head>
 <body>
+  <header><h1>OpenWeather API Demo</h1></header>
+  <main>
+    <form id="location-form">
+      <label for="city-name-input">City:</label>
+      <input id="city-name-input" name="city-name-input">
+      <label for="temp-units-input">Units</label>
+      <label for="state-name-input">State:</label>
+      <select id="state-name-input" name="state-name-input"></select>
+      <select id="temp-units-input" name="temp-units-input">
+        <option name="Celsius">Celsius</option>
+        <option name="Fahrenheit">Fahrenheit</option>
+        <option name="Kelvin">Kelvin</option>
+      </select>
+      <button type="submit">Get weather</button>
+    </form>
+    <div id="output-area">
+      
+    </div>
+  </main>
 </body>
 </html>

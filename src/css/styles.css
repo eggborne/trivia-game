@@ -1,5 +1,5 @@
 :root {
-
+  --header-height: 4rem;
 }
 
 *, * *, * * * {
@@ -10,5 +10,47 @@
 html,
 body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  
+  background-color: #222;
+  color: #ddd;
+}
+
+header {
+  height: var(--header-height);
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+select, input {
+  background-color: inherit;
+  font-size: inherit;
+  padding: 0 1rem;
+}
+
+button, input, select  {
+  align-self: stretch;
+
+}
+
+main {
+  padding: 3rem;
+}
+
+#location-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--header-height);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#output-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #00000066;
+  padding: 2rem;
+  gap: 1rem;
 }
