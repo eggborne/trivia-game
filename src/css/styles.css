@@ -55,14 +55,16 @@ main {
   background-color: #00000066;
   padding: 2rem;
   gap: 1rem;
-  min-height: 12rem;
+  min-height: 14rem;
+  border-radius: 2rem;
 }
 
 #loading-message {
+  position: absolute;
   left: 50%;
-  top: 50%;
-  /* transform: translate(-50%, -50%); */
-  transform-origin: center;
+  top: calc(var(--header-height) * 5);
+  transform: translate(-50%, -50%);
+  transform-origin: 0;
   color: #444;
   font-weight: bold;
   display: none;

@@ -18,7 +18,6 @@ function getWeather(city, state, units) {
   geoRequest.addEventListener("loadend", function () {
     let response = JSON.parse(this.responseText);
     if (this.status === 200) {
-      console.log('georeq got', response)
       let targetCity = response.filter(obj => obj.state === state)[0];
       let lat = targetCity.lat;
       let lon = targetCity.lon;
@@ -57,16 +56,18 @@ function getWeather(city, state, units) {
 }
 
 function printWeatherInfo(city, state, units, data) {
-  document.getElementById('output-area').innerHTML += `
+  document.getElementById('output-area').innerHTML = `
+    <img src='http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png'>
     <h2>${city[0].toUpperCase() + city.substring(1, city.length)}, ${state}</h2>
     <div>${data.weather[0].main}</div>
-    <div>Temp: ${data.main.temp}° ${units}</div>
+    <div>Temp: ${Math.round(data.main.temp)}° ${units}</div>
     <div>Humidity: ${data.main.humidity}%</div>
   `;
 }
 
 document.getElementById('location-form').addEventListener('submit', (e) => {
   e.preventDefault();
+  document.getElementById('output-area').innerHTML = ``;
   document.getElementById('loading-message').classList.add('showing');
   let userCity = document.getElementById('city-name-input').value;
   let userState = states[document.getElementById('state-name-input').value];
