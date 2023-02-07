@@ -20,6 +20,7 @@ label {
 input, button, select {
   padding: 1rem;
   cursor: pointer;
+  border-radius: 0.5rem;
 }
 
 header {
@@ -76,6 +77,8 @@ form > button {
   background-color: rgb(108, 108, 108);
   color: #222;
   padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 0.25rem 0.25rem rgba(0, 0, 0, 0.153);
   opacity: 0;
   transition: opacity 500ms ease, background-color 500ms ease;
 }

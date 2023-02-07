@@ -55,11 +55,11 @@ async function createTriviaCards() {
     if (questionObj.type === 'boolean') {
       choicesHTML = `
         <div>
-          <input type="radio" id="true-${questionList.indexOf(questionObj)}" name="boolean-${questionList.indexOf(questionObj)}" value="true" checked>
+          <input type="radio" id="true-${questionList.indexOf(questionObj)}" name="boolean-${questionList.indexOf(questionObj)}" value="True" checked>
           <label for="true-${questionList.indexOf(questionObj)}">True</label>
         </div>
         <div>
-          <input type="radio" id="false-${questionList.indexOf(questionObj)}" name="boolean-${questionList.indexOf(questionObj)}" value="false">
+          <input type="radio" id="false-${questionList.indexOf(questionObj)}" name="boolean-${questionList.indexOf(questionObj)}" value="False">
           <label for="false-${questionList.indexOf(questionObj)}">False</label>
         </div>
       `;
@@ -140,6 +140,8 @@ function handleCheckAnswersClick(e) {
   for (let i = 0; i < totalQuestions; i++) {
     let correctAnswer = questionList[i].correct_answer;
     let userAnswer = [...cardElements[i].getElementsByTagName('input')].filter(inp => inp.checked)[0].value;
+    console.log('user answer', userAnswer)
+    console.log('correct answer', correctAnswer)
     if (userAnswer === correctAnswer) {
       cardElements[i].style.backgroundColor = 'green';
       correctAnswers++;
