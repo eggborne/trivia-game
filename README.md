@@ -1,12 +1,5 @@
-# Galactic Age Calculator
-#### Special Project #4 for Epicodus, 3 February 2023
+# Trivia Game
 ### by Mike Donovan
-
-[Visit at GitHub Pages](https://eggborne.github.io/galactic-age-calculator)
-
-## Description
-
-A website that various information about a user's solar age based on different planets.
 
 ## Technologies Used:
 * HTML
@@ -19,7 +12,7 @@ A website that various information about a user's solar age based on different p
 
 Open a terminal and clone this repository by typing:
 
-> git clone https://github.com/eggborne/galactic-age-calculator
+> git clone https://github.com/eggborne/trivia-game
 
 Install the required dependencies by typing:
 
