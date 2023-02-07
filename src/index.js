@@ -103,12 +103,10 @@ async function handleStartGameClick(e) {
   let request = new XMLHttpRequest();
   let questionCount = document.getElementById('question-count').value;
   let userCategory = document.getElementById('subject-select').value;
-  if (userCategory === 'Random') {
-    userCategory = categories[randomInt(0, categories.length - 1)].name;
-  }
   let subjectID = getIDForCategory(userCategory);
   let difficulty = document.getElementById('difficulty-select').value.toLowerCase();
-  const url = `https://opentdb.com/api.php?amount=${questionCount}&category=${subjectID}&difficulty=${difficulty}&token=${sessionKey}`;
+  let categoryQuery = userCategory === 'Random' ? `` : `&category=${subjectID}`;
+  const url = `https://opentdb.com/api.php?amount=${questionCount}${categoryQuery}&difficulty=${difficulty}&token=${sessionKey}`;
   request.addEventListener("loadend", async function () {
     let response = JSON.parse(this.responseText);
     if (response.results.length) {
